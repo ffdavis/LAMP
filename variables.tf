@@ -1,40 +1,83 @@
+/*
+** NOTE:
+
+VPC: 172.28.0.0/16
+------------------------------------------------------ route53----
+I  AZ Data Center 1                 AZ Data Center 2             I
+I  ------------------------         ------------------------     I
+I  subnet-1 (priv)                  subnet-2 (priv)              I
+I  172.28.0.0/74                    172.28.3.0/24                I
+I  -------------                    -------------                I
+I  http apache                      MySql                        I
+I                                                                I
+I  instance                         instance                     I
+------------------------------------------------------------------
+*/
+
 variable "region" {
- default = "us-west-2"
+  default = "us-east-1"
+
+  # default = "us-west-2"
 }
+
 variable "AmiLinux" {
- type = "map"
- default = {
- us-east-1 = "ami-b73b63a0"
- us-west-2 = "ami-5ec1673e"
- eu-west-1 = "ami-9398d3e0"
- }
- description = "I add only 3 regions (Virginia, Oregon, Ireland) to show the map feature but you can add all the r"
+  type = "map"
+
+  default = {
+    us-east-1 = "ami-0de53d8956e8dcf80" # "ami-b73b63a0"
+
+    #   us-west-2 = "ami-5ec1673e"
+    #   eu-west-1 = "ami-9398d3e0"
+
+    # US East (N. Virginia) - us-east-1
+    # US West (Oregon)      - us-west-2
+    # EU (Ireland)          - eu-west-1
+  }
+
+  description = "I add only 3 regions (Virginia, Oregon, Ireland) to show the map feature but you can add all the r"
 }
+
+/*
 variable "aws_access_key" {
- default = "”
- description = "the user aws access key"
+  default     = "xxx"
+  description = "the user aws access key"
 }
+
 variable "aws_secret_key" {
- default = "”
- description = "the user aws secret key"
+  default     = "xxx"
+  description = "the user aws secret key"
 }
+*/
+
+variable "credentialsfile" {
+  # default = "/Users/giuseppe/.aws/credentials" #replace your home directory
+  default     = "/Users/Fer/.aws/credentials"
+  description = "where your access and secret_key are stored, you create the file when you run the aws config"
+}
+
 variable "vpc-fullcidr" {
- default = "172.28.0.0/16"
- description = "the vpc cdir"
+  default     = "172.28.0.0/16"
+  description = "the vpc cdir"
 }
+
 variable "Subnet-Public-AzA-CIDR" {
- default = "172.28.0.0/24"
- description = "the cidr of the subnet"
+  default     = "172.28.0.0/24"
+  description = "the cidr of the subnet"
 }
+
 variable "Subnet-Private-AzA-CIDR" {
- default = "172.28.3.0/24"
- description = "the cidr of the subnet"
+  default     = "172.28.3.0/24"
+  description = "the cidr of the subnet"
 }
+
 variable "key_name" {
- default = ""
- description = "the ssh key to use in the EC2 machines"
+  default     = "/c/tmp/AWS Keys/myKey.pem"
+  description = "the ssh key to use in the EC2 machines"
 }
+
 variable "DnsZoneName" {
- default = "linuxacademy.internal"
- description = "the internal dns name"
+  default = "fdavis.internal"
+
+  # default     = "linuxacademy.internal"
+  description = "the internal dns name"
 }
